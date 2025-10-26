@@ -22,10 +22,9 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserDto> getUserInfo(@AuthenticationPrincipal Jwt accessToken,
-                                               @RequestHeader("X-Id-Token") String idTokenString) {
+    public ResponseEntity<UserDto> getUserInfo(@AuthenticationPrincipal Jwt accessToken) {
 
-        var user = _userService.createUserIfNotExist(accessToken,idTokenString);
+        var user = _userService.createUserIfNotExist(accessToken);
 
         System.out.println("User logged in: " + user.username + " | Email: " + user.email);
 

@@ -30,17 +30,17 @@ public class UserServices {
     }
 
 
-    public UserDto createUserIfNotExist(Jwt accessToken,String idTokenString){
+    public UserDto createUserIfNotExist(Jwt accessToken){
 
         // Decode ID token
-        Jwt idToken = jwtDecoder.decode(idTokenString);
+//        Jwt idToken = jwtDecoder.decode(idTokenString);
 
         List<String> groups = accessToken.getClaimAsStringList("cognito:groups");
 
         GlobalRole role = "ADMIN".equalsIgnoreCase(groups.get(0))?GlobalRole.ADMIN:GlobalRole.USER;
 
         String sub = accessToken.getClaim("sub");
-        String email = idToken.getClaim("email");  // from ID token
+        String email = accessToken.getClaim("email");
         String username = email;
 
         // Lazy create user if not found
@@ -63,6 +63,7 @@ public class UserServices {
      if(result.isPresent()){
          var updatingUser  =result.get();
          updatingUser.setUsername(Request.username);
+         updatingUser.setEmail(Request.email);
          _userRepository.save(updatingUser);
          return true;
      }
