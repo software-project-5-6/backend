@@ -1,7 +1,6 @@
 package com.Majstro.psmsbackend.service;
 
 import com.Majstro.psmsbackend.exception.ProjectNotFoundException;
-import com.Majstro.psmsbackend.exception.RoleNotFoundException;
 import com.Majstro.psmsbackend.exception.UserNotFoundException;
 import com.Majstro.psmsbackend.mapper.ProjectMapper;
 import com.Majstro.psmsbackend.models.EntityModels.Project;
@@ -10,12 +9,10 @@ import com.Majstro.psmsbackend.models.Dtos.ProjectDto;
 import com.Majstro.psmsbackend.models.Dtos.UserWithRole;
 import com.Majstro.psmsbackend.repo.ProjectAssignmentRepository;
 import com.Majstro.psmsbackend.repo.ProjectRepository;
-import com.Majstro.psmsbackend.repo.RoleRepository;
 import com.Majstro.psmsbackend.repo.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,16 +22,16 @@ public class ProjectService {
     ProjectRepository _projectRepository;
     ProjectAssignmentRepository _projectAssignmentRepository;
     UserRepository _userRepository;
-    RoleRepository _roleRepository;
+
 
     public ProjectService(ProjectRepository _projectRepository,
                           ProjectAssignmentRepository _projectAssignmentRepository,
-                          UserRepository _userRepository,
-                          RoleRepository _roleRepository) {
+                          UserRepository _userRepository
+                          ) {
         this._projectRepository = _projectRepository;
         this._projectAssignmentRepository = _projectAssignmentRepository;
         this._userRepository = _userRepository;
-        this._roleRepository = _roleRepository;
+
     }
 
 
@@ -74,6 +71,8 @@ public class ProjectService {
 
     }
 
+
+
     private List<UserWithRole> createProjectAssignments(
             Project project,List<UserWithRole> userRoleList){
 
@@ -85,17 +84,15 @@ public class ProjectService {
           var user = _userRepository.findById(x.userId)
                   .orElseThrow(()-> new UserNotFoundException("User not found with ID: " + x.userId));
 
-           var role = _roleRepository.findByRoleName(x.role)
-                   .orElseThrow(()-> new RoleNotFoundException("Role  "+ x.role + " not found " ));
-
               assignment.setUser(user);
-              assignment.setRole(role);
+              assignment.setRole(x.role);
 
            var result = _projectAssignmentRepository.save(assignment);
            x.setAssignmentId(result.getId());
        }
         return userRoleList;
     }
+
 
 
     @Transactional
@@ -118,6 +115,7 @@ public class ProjectService {
     }
 
 
+
     @Transactional
     public Boolean updateProject(ProjectDto updateRequest){
 
@@ -136,11 +134,9 @@ public class ProjectService {
 
                 var user = _userRepository.findById(x.userId)
                         .orElseThrow(()->new UserNotFoundException("User Not Found with Id "+x.userId));
-                var role = _roleRepository.findByRoleName(x.role)
-                        .orElseThrow(()-> new RoleNotFoundException("Role  "+ x.role + " not found " ));
 
                 newAssignment.setUser(user);
-                newAssignment.setRole(role);
+                newAssignment.setRole(x.role);
 
                 updatingProject.getAssignments().add(newAssignment);
             }

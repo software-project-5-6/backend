@@ -9,7 +9,10 @@ public class ProjectDto {
     public UUID projectId ;
     public String projectName;
     public String description;
-    public String clientReference;
+    public String clientName;
+    public String clientAddress;
+    public String clientEmail;
+    public String clientPhone;
     public String iconUrl;
     public int artifactCount;
     public  List<UserWithRole> userRoleList;

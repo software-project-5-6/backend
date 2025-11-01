@@ -27,7 +27,7 @@ public class UserMapper {
 
             projectRolePair.setProjectId(x.getId());
             projectRolePair.setProjectName(x.getProject().getName());
-            projectRolePair.setProjectRole(x.getRole().getRoleName());
+            projectRolePair.setProjectRole(x.getRole());
 
 
             newProjectRoleList.add(projectRolePair);

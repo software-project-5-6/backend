@@ -24,7 +24,16 @@ public class Project {
     private String description;
 
     @Column
-    private String clientReference;
+    private String clientName;
+
+    @Column
+    private String clientAddress;
+
+    @Column
+    private String clientEmail;
+
+    @Column
+    private String clientPhone;
 
     @Column
     private String iconUrl;
@@ -36,10 +45,20 @@ public class Project {
     private List<ProjectAssignment> assignments = new ArrayList<>();
 
 
-    public Project(String name, String description, String clientReference, String iconUrl, int artifactCount) {
+    public Project(String name,
+                   String description,
+                   String clientName,
+                   String clientAddress,
+                   String clientEmail,
+                   String clientPhone,
+                   String iconUrl,
+                   int artifactCount) {
         this.name = name;
         this.description = description;
-        this.clientReference = clientReference;
+        this.clientName = clientName;
+        this.clientAddress = clientAddress;
+        this.clientEmail = clientEmail;
+        this.clientPhone = clientPhone;
         this.iconUrl = iconUrl;
         this.artifactCount = artifactCount;
     }

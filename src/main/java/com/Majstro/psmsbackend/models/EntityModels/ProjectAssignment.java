@@ -1,5 +1,6 @@
 package com.Majstro.psmsbackend.models.EntityModels;
 
+import com.Majstro.psmsbackend.models.Dtos.ProjecRoles;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,9 +24,9 @@ public class ProjectAssignment {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "project_role")
+    private ProjecRoles role;
 
     private LocalDateTime assignedAt = LocalDateTime.now();
 }

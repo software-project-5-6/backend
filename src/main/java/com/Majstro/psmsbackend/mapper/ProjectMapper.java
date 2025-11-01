@@ -18,15 +18,19 @@ public class ProjectMapper {
         newProjectDto.projectId=project.getId();
         newProjectDto.projectName=project.getName();
         newProjectDto.description=project.getDescription();
-        newProjectDto.clientReference=project.getClientReference();
+        newProjectDto.clientName=project.getClientName();
+        newProjectDto.clientAddress=project.getClientAddress();
+        newProjectDto.clientEmail=project.getClientEmail();
+        newProjectDto.clientPhone=project.getClientPhone();
+
         newProjectDto.iconUrl=project.getIconUrl();
-        newProjectDto.clientReference=project.getClientReference();
+
 
         for(ProjectAssignment y: project.getAssignments()){
 
             userRoleList.add(new UserWithRole(
                     y.getUser().getId(),
-                    y.getRole().getRoleName(),
+                    y.getRole(),
                     y.getId()));
         }
 
@@ -39,7 +43,10 @@ public class ProjectMapper {
 
         project.setName(projectDto.projectName);
         project.setDescription(projectDto.description);
-        project.setClientReference(projectDto.clientReference);
+        project.setClientName(projectDto.clientName);
+        project.setClientAddress(projectDto.clientAddress);
+        project.setClientEmail(projectDto.clientEmail);
+        project.setClientPhone(projectDto.clientPhone);
         project.setIconUrl(projectDto.iconUrl);
         project.setArtifactCount(projectDto.artifactCount);
 

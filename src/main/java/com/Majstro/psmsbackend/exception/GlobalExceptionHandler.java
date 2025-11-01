@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
-@RestControllerAdvice
+
+
+@RestControllerAdvice(basePackages ="com.Majstro.psmsbackend.controller" )
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
@@ -40,23 +42,5 @@ public class GlobalExceptionHandler {
         problem.setDetail(ex.getMessage());
         return problem;
     }
-
-    @ExceptionHandler(RoleNotFoundException.class)
-    public ProblemDetail handleRoleNotFound(RoleNotFoundException ex) {
-        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-        problem.setTitle("Role Not Found");
-        problem.setDetail(ex.getMessage());
-        return problem;
-    }
-
-
-    @ExceptionHandler(Exception.class)
-    public ProblemDetail handleGeneric(Exception ex) {
-        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        problem.setTitle("Internal Server Error");
-        problem.setDetail(ex.getMessage());
-        return problem;
-    }
-
 
 }
