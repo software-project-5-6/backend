@@ -117,9 +117,9 @@ public class ProjectService {
 
 
     @Transactional
-    public Boolean updateProject(ProjectDto updateRequest){
+    public Boolean updateProject(UUID projectId,ProjectDto updateRequest){
 
-        var existingProject = _projectRepository.findById(updateRequest.projectId)
+        var existingProject = _projectRepository.findById(projectId)
                 .orElseThrow(()->new ProjectNotFoundException("Project with id "+updateRequest.projectId+" not found"));
 
             var updatingProject =existingProject;

@@ -41,10 +41,10 @@ public class ProjectController {
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
-    @PutMapping("/")
-    public ResponseEntity<Boolean> updateProject(@RequestBody ProjectDto updateRequest){
+    @PutMapping("/{id}")
+    public ResponseEntity<Boolean> updateProject(@PathVariable UUID id,@RequestBody ProjectDto updateRequest){
 
-        var result = _projectService.updateProject(updateRequest);
+        var result = _projectService.updateProject(id,updateRequest);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
 
     private  UserServices _userService;
@@ -19,7 +20,6 @@ public class UserController {
     public UserController(UserServices userService) {
         this._userService = userService;
     }
-
 
 
     @GetMapping("/me")
