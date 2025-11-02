@@ -1,19 +1,25 @@
 package com.Majstro.psmsbackend.models.Dtos;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectDto {
-    public UUID projectId ;
-    public String projectName;
-    public String description;
-    public String clientName;
-    public String clientAddress;
-    public String clientEmail;
-    public String clientPhone;
-    public String iconUrl;
-    public int artifactCount;
-    public  List<UserWithRole> userRoleList;
+    private UUID projectId;
+    private String projectName;
+    private String description;
+    private String clientName;
+    private String clientAddress;
+    private String clientEmail;
+    private String clientPhone;
+    private String iconUrl;
+    private Integer artifactCount;
+    private List<UserWithRole> userRoleList = new ArrayList<>();
 }

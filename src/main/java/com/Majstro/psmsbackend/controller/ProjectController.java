@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/project")
+@RequestMapping("/api/v1/project")
 public class ProjectController {
 
     ProjectService _projectService;

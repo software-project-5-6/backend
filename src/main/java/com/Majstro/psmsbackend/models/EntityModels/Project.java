@@ -1,8 +1,9 @@
 package com.Majstro.psmsbackend.models.EntityModels;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "projects")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+//dim
 public class Project {
     @Id
     @GeneratedValue
@@ -39,11 +42,10 @@ public class Project {
     private String iconUrl;
 
     @Column
-    private int artifactCount=0;
+    private Integer artifactCount;
 
-    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, orphanRemoval = true,fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProjectAssignment> assignments = new ArrayList<>();
-
 
     public Project(String name,
                    String description,
@@ -52,7 +54,7 @@ public class Project {
                    String clientEmail,
                    String clientPhone,
                    String iconUrl,
-                   int artifactCount) {
+                   Integer artifactCount) {
         this.name = name;
         this.description = description;
         this.clientName = clientName;
@@ -63,4 +65,33 @@ public class Project {
         this.artifactCount = artifactCount;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        if (artifactCount == null) {
+            artifactCount = 0;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Project)) return false;
+        Project project = (Project) o;
+        return id != null && id.equals(project.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", clientName='" + clientName + '\'' +
+                '}';
+    }
 }

@@ -79,11 +79,11 @@ public class UserServices {
     public Boolean updateUser(UserDto request){
 
 
-        User updatingUser = _userRepository.findById(request.id)
-                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + request.id));
+        User updatingUser = _userRepository.findById(request.getId())
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + request.getId()));
 
-        updatingUser.setUsername(request.username);
-        updatingUser.setEmail(request.email);
+        updatingUser.setUsername(request.getUsername());
+        updatingUser.setEmail(request.getEmail());
 
         _userRepository.save(updatingUser);
         return true;

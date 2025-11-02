@@ -1,13 +1,16 @@
 package com.Majstro.psmsbackend.models.Dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectWithRole {
-
-    public UUID projectId;
-    public String projectName;
-    public ProjecRoles projectRole;
+    private UUID projectId;
+    private String projectName;
+    private ProjectRoles projectRole;
 }

@@ -12,31 +12,27 @@ public class UserMapper {
 
     public static UserDto UserToUserDto(User user){
 
-        UserDto newuserdto=new UserDto(
+        UserDto newuserdto = new UserDto(
                 user.getId(),
                 user.getCognitoSub(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getGlobalRole()) ;
-
+                user.getGlobalRole());
 
         List<ProjectWithRole> newProjectRoleList = new ArrayList<>();
 
         for(ProjectAssignment x: user.getAssignments()){
             ProjectWithRole projectRolePair = new ProjectWithRole();
 
-            projectRolePair.setProjectId(x.getId());
+            projectRolePair.setProjectId(x.getProject().getId());
             projectRolePair.setProjectName(x.getProject().getName());
             projectRolePair.setProjectRole(x.getRole());
-
 
             newProjectRoleList.add(projectRolePair);
         }
 
-        newuserdto.assignments=newProjectRoleList;
+        newuserdto.setAssignments(newProjectRoleList);
 
         return newuserdto;
     }
-
-
 }

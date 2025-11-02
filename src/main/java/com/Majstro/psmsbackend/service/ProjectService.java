@@ -56,10 +56,10 @@ public class ProjectService {
         ProjectMapper.ProjectDtoToProjectPartiallyExtractor(request,newProject);
 
         var createdproject = createProject(newProject);
-        var createdAssignments =createProjectAssignments(createdproject,request.userRoleList);
+        var createdAssignments = createProjectAssignments(createdproject, request.getUserRoleList());
 
-        request.projectId=createdproject.getId();
-        request.userRoleList=createdAssignments;
+        request.setProjectId(createdproject.getId());
+        request.setUserRoleList(createdAssignments);
 
         return request;
     }
@@ -74,18 +74,18 @@ public class ProjectService {
 
 
     private List<UserWithRole> createProjectAssignments(
-            Project project,List<UserWithRole> userRoleList){
+            Project project, List<UserWithRole> userRoleList){
 
        for(UserWithRole x : userRoleList){
 
           ProjectAssignment assignment = new ProjectAssignment();
           assignment.setProject(project);
 
-          var user = _userRepository.findById(x.userId)
-                  .orElseThrow(()-> new UserNotFoundException("User not found with ID: " + x.userId));
+          var user = _userRepository.findById(x.getUserId())
+                  .orElseThrow(()-> new UserNotFoundException("User not found with ID: " + x.getUserId()));
 
               assignment.setUser(user);
-              assignment.setRole(x.role);
+              assignment.setRole(x.getRole());
 
            var result = _projectAssignmentRepository.save(assignment);
            x.setAssignmentId(result.getId());
@@ -117,26 +117,26 @@ public class ProjectService {
 
 
     @Transactional
-    public Boolean updateProject(UUID projectId,ProjectDto updateRequest){
+    public Boolean updateProject(UUID projectId, ProjectDto updateRequest){
 
         var existingProject = _projectRepository.findById(projectId)
-                .orElseThrow(()->new ProjectNotFoundException("Project with id "+updateRequest.projectId+" not found"));
+                .orElseThrow(()->new ProjectNotFoundException("Project with id " + updateRequest.getProjectId() + " not found"));
 
-            var updatingProject =existingProject;
+            var updatingProject = existingProject;
 
-            ProjectMapper.ProjectDtoToProjectPartiallyExtractor(updateRequest,updatingProject);
+            ProjectMapper.ProjectDtoToProjectPartiallyExtractor(updateRequest, updatingProject);
 
             updatingProject.getAssignments().clear();
 
-            for(UserWithRole x : updateRequest.userRoleList){
+            for(UserWithRole x : updateRequest.getUserRoleList()){
                 ProjectAssignment newAssignment = new ProjectAssignment();
                 newAssignment.setProject(updatingProject);
 
-                var user = _userRepository.findById(x.userId)
-                        .orElseThrow(()->new UserNotFoundException("User Not Found with Id "+x.userId));
+                var user = _userRepository.findById(x.getUserId())
+                        .orElseThrow(()->new UserNotFoundException("User Not Found with Id " + x.getUserId()));
 
                 newAssignment.setUser(user);
-                newAssignment.setRole(x.role);
+                newAssignment.setRole(x.getRole());
 
                 updatingProject.getAssignments().add(newAssignment);
             }

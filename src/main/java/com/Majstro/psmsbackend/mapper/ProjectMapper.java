@@ -15,41 +15,37 @@ public class ProjectMapper {
         ProjectDto newProjectDto = new ProjectDto();
         List<UserWithRole> userRoleList = new ArrayList<>();
 
-        newProjectDto.projectId=project.getId();
-        newProjectDto.projectName=project.getName();
-        newProjectDto.description=project.getDescription();
-        newProjectDto.clientName=project.getClientName();
-        newProjectDto.clientAddress=project.getClientAddress();
-        newProjectDto.clientEmail=project.getClientEmail();
-        newProjectDto.clientPhone=project.getClientPhone();
-
-        newProjectDto.iconUrl=project.getIconUrl();
-
+        newProjectDto.setProjectId(project.getId());
+        newProjectDto.setProjectName(project.getName());
+        newProjectDto.setDescription(project.getDescription());
+        newProjectDto.setClientName(project.getClientName());
+        newProjectDto.setClientAddress(project.getClientAddress());
+        newProjectDto.setClientEmail(project.getClientEmail());
+        newProjectDto.setClientPhone(project.getClientPhone());
+        newProjectDto.setIconUrl(project.getIconUrl());
+        newProjectDto.setArtifactCount(project.getArtifactCount());
 
         for(ProjectAssignment y: project.getAssignments()){
-
             userRoleList.add(new UserWithRole(
                     y.getUser().getId(),
                     y.getRole(),
                     y.getId()));
         }
 
-        newProjectDto.userRoleList=userRoleList;
+        newProjectDto.setUserRoleList(userRoleList);
 
         return newProjectDto;
     }
 
-    public static void ProjectDtoToProjectPartiallyExtractor(ProjectDto projectDto,Project project){
+    public static void ProjectDtoToProjectPartiallyExtractor(ProjectDto projectDto, Project project){
 
-        project.setName(projectDto.projectName);
-        project.setDescription(projectDto.description);
-        project.setClientName(projectDto.clientName);
-        project.setClientAddress(projectDto.clientAddress);
-        project.setClientEmail(projectDto.clientEmail);
-        project.setClientPhone(projectDto.clientPhone);
-        project.setIconUrl(projectDto.iconUrl);
-        project.setArtifactCount(projectDto.artifactCount);
-
+        project.setName(projectDto.getProjectName());
+        project.setDescription(projectDto.getDescription());
+        project.setClientName(projectDto.getClientName());
+        project.setClientAddress(projectDto.getClientAddress());
+        project.setClientEmail(projectDto.getClientEmail());
+        project.setClientPhone(projectDto.getClientPhone());
+        project.setIconUrl(projectDto.getIconUrl());
+        project.setArtifactCount(projectDto.getArtifactCount());
     }
-
 }
